@@ -11,16 +11,18 @@ class Perceptron {
         vector<double> weight(n,0);
         double bias;
     public:
-        void newPerceptron(int size, vector<int> inputs, vector<int> weights){
+        void newPerceptron(int size, vector<int> inputs, vector<int> weights, double bias){
             n = size;
             input = inputs;
             weight = weights;
+            bias = bias;
         }
-        double output(vector<double>input, vector<double>weight double bias){
+        double output(){
         
-                int ans = bias; 
+           double ans = bias; 
+                
                 for (int i = 0; i < length; i++) {
-                    ans += weights[i]*inputs[i];
+                    ans += weight[i]*input[i];
 
                 }
 
@@ -30,6 +32,11 @@ class Perceptron {
 
 };
 
+
+Perceptron p = new Perceptron();
+p.newPerceptron(3, {1,2,3,4}, {2,3,1}, 3);
+
+double o1 = p.output();
 
 
 

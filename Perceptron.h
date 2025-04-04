@@ -1,43 +1,59 @@
 #ifndef PERCEPTRON_H
 #define PERCEPTRON_H
 
-#include <vector>   
+#include <vector>
+#include "Activation.h"
 
-class Perceptron {
+class Sequential {
 
-    private:
-        int n;
-        vector<double> input(n,0);
-        vector<double> weight(n,0);
-        double bias;
-    public:
-        void newPerceptron(int size, vector<int> inputs, vector<int> weights, double bias){
-            n = size;
-            input = inputs;
-            weight = weights;
-            bias = bias;
+private:
+    int n;
+    std::vector<double> input;
+    std::vector<double> weight;
+    double bias;
+
+public:
+    void newPerceptron(int size, std::vector<double> inputs, std::vector<double> weights, double b) {
+        n = size;
+        input = inputs;
+        weight = weights;
+        bias = b;
+    }
+
+    double output() {
+        double ans = bias;
+        for (int i = 0; i < n; i++) {
+            ans += weight[i] * input[i];
         }
-        double output(){
-        
-           double ans = bias; 
-                
-                for (int i = 0; i < length; i++) {
-                    ans += weight[i]*input[i];
+        return Activation::sigmoid(ans);
+    }
 
-                }
-
-                return ans;
-
+    
+    double output(int actFunc) {
+        double ans = bias;
+        for (int i = 0; i < n; i++) {
+            ans += weight[i] * input[i];
         }
-
+        switch (actFunc) {
+            case 1:
+                return Activation::sigmoid(ans);
+            case 2:
+                return Activation:: tanh(ans);
+            case 3:
+                return Activation:: ReLU(ans);
+            case 4:
+                return Activation:: LeakyReLU(ans);
+            case 5:
+                return Activation:: elu(ans);
+            case 6:
+                return Activation:: swish(ans);
+            case 7:
+                return Activation:: softmax(ans);
+            default:
+                return Activation::sigmoid(ans);
+                break;
+        }
+    }
 };
 
-
-Perceptron p = new Perceptron();
-p.newPerceptron(3, {1,2,3,4}, {2,3,1}, 3);
-
-double o1 = p.output();
-
-
-
-
+#endif
